@@ -36,12 +36,13 @@ openresolv can generate a combined resolv.conf or a configuration file for a loc
 (like unbound, dnsmasq or bind) that will route the dns requests according to the search domain.
 
 %prep
-%setup -q
+%autosetup
 sed -i -e 's/^#!\/bin\/sh$//' named.in pdnsd.in dnsmasq.in unbound.in libc.in pdns_recursor.in
 
 %build
+# not GNU autoconf
 ./configure --bindir=%{_sbindir} --libexecdir=%{_libexecdir}/resolvconf
-make %{?_smp_mflags}
+%make_build
 
 %install
 %make_install
@@ -53,8 +54,8 @@ make %{?_smp_mflags}
 %dir %{_libexecdir}/resolvconf
 %{_libexecdir}/resolvconf/*
 %{_sbindir}/resolvconf
-%{_mandir}/man5/resolvconf.conf.5%{?ext_man}
-%{_mandir}/man8/resolvconf.8%{?ext_man}
+%{_mandir}/man5/resolvconf.conf.5*
+%{_mandir}/man8/resolvconf.8*
 
 %changelog
 
