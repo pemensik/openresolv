@@ -52,7 +52,7 @@ mv %{buildroot}%{_mandir}/man8/resolvconf{,.%{name}}.8
 
 %post
 %{_sbindir}/update-alternatives \
-  --install %{_sbindir}/resolvconf resolvconf %{_sbindir}/resolvconf.%{name} 8 \
+  --install %{_sbindir}/resolvconf resolvconf %{_sbindir}/resolvconf.%{name} 30 \
   --slave %{_mandir}/man8/resolvconf.8%{?manext} resolvconf.8%{?manext} %{_mandir}/man8/resolvconf.%{name}.8%{?manext}
 
 %postun
