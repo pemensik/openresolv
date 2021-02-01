@@ -46,6 +46,16 @@ sed -i -e 's/^#!\/bin\/sh$//' named.in pdnsd.in dnsmasq.in unbound.in libc.in pd
 
 %install
 %make_install
+mv %{buildroot}%{_sbindir}/resolvconf{,.%{name}}
+
+%post
+%{_sbindir}/update-alternatives --install %{_sbindir}/resolvconf \
+  %{name} %{_sbindir}/resolvconf.%{name} 20
+
+%postun
+if [ $1 -eq 0 ] ; then
+  %{_sbindir}/update-alternatives --remove %{name} %{_sbindir}/resolvconf.%{name}
+fi
 
 %files
 %license LICENSE
@@ -53,7 +63,7 @@ sed -i -e 's/^#!\/bin\/sh$//' named.in pdnsd.in dnsmasq.in unbound.in libc.in pd
 %config(noreplace) %{_sysconfdir}/resolvconf.conf
 %dir %{_libexecdir}/resolvconf
 %{_libexecdir}/resolvconf/*
-%{_sbindir}/resolvconf
+%{_sbindir}/resolvconf.%{name}
 %{_mandir}/man5/resolvconf.conf.5*
 %{_mandir}/man8/resolvconf.8*
 
