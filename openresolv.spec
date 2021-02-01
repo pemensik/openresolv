@@ -19,7 +19,7 @@
 
 Name:           openresolv
 Version:        3.12.0
-Release:        0
+Release:        1
 Summary:        DNS management framework
 License:        BSD-2-Clause
 URL:            https://roy.marples.name/projects/openresolv
@@ -72,4 +72,7 @@ fi
 %{_mandir}/man8/resolvconf.%{name}.8*
 
 %changelog
+* Mon Feb 01 2021 Petr Menšík <pemensik@redhat.com> - 3.12.0-1
+- Initial build
+
 
