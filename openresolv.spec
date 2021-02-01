@@ -15,6 +15,7 @@
 # Please submit bugfixes or comments via https://bugs.opensuse.org/
 #
 
+%global manext .gz
 
 Name:           openresolv
 Version:        3.12.0
@@ -47,14 +48,17 @@ sed -i -e 's/^#!\/bin\/sh$//' named.in pdnsd.in dnsmasq.in unbound.in libc.in pd
 %install
 %make_install
 mv %{buildroot}%{_sbindir}/resolvconf{,.%{name}}
+mv %{buildroot}%{_mandir}/man8/resolvconf{,.%{name}}.8
 
 %post
-%{_sbindir}/update-alternatives --install %{_sbindir}/resolvconf \
-  %{name} %{_sbindir}/resolvconf.%{name} 20
+%{_sbindir}/update-alternatives \
+  --install %{_sbindir}/resolvconf resolvconf %{_sbindir}/resolvconf.%{name} 8 \
+  --slave %{_mandir}/man8/resolvconf.8%{?manext} resolvconf.8%{?manext} %{_mandir}/man8/resolvconf.%{name}.8%{?manext}
 
 %postun
 if [ $1 -eq 0 ] ; then
-  %{_sbindir}/update-alternatives --remove %{name} %{_sbindir}/resolvconf.%{name}
+  %{_sbindir}/update-alternatives --remove resolvconf %{_sbindir}/resolvconf.%{name}
+  %{_sbindir}/update-alternatives --remove-slave resolvconf %{_sbindir}/resolvconf.%{name} resolvconf.8%{?manext}
 fi
 
 %files
@@ -65,7 +69,7 @@ fi
 %{_libexecdir}/resolvconf/*
 %{_sbindir}/resolvconf.%{name}
 %{_mandir}/man5/resolvconf.conf.5*
-%{_mandir}/man8/resolvconf.8*
+%{_mandir}/man8/resolvconf.%{name}.8*
 
 %changelog
 
