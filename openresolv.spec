@@ -26,6 +26,7 @@ URL:            https://roy.marples.name/projects/openresolv
 Source:         https://roy.marples.name/downloads/openresolv/%{name}-%{version}.tar.xz
 Requires:       bash
 BuildArch:      noarch
+Provides:       resolvconf = %{version}-%{release}
 
 %description
 /etc/resolv.conf is a file that holds the configuration for the local resolution of domain names.
