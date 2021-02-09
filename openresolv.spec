@@ -74,6 +74,8 @@ fi
 %{_sbindir}/resolvconf.%{name}
 %{_mandir}/man5/resolvconf.conf.5*
 %{_mandir}/man8/resolvconf.%{name}.8*
+%ghost %{_sbindir}/resolvconf
+%ghost %{_mandir}/man8/resolvconf.8*
 
 %changelog
 * Mon Feb 01 2021 Petr Menšík <pemensik@redhat.com> - 3.12.0-1
