@@ -45,7 +45,7 @@ sed -i -e '1 s,^#!/bin/sh$,,' *.in
 
 %build
 # not GNU autoconf
-./configure --bindir=%{_sbindir} --libexecdir=%{_libexecdir}/resolvconf
+./configure --bindir=%{_sbindir} --libexecdir=%{_prefix}/lib/resolvconf
 %make_build
 
 %install
@@ -69,8 +69,8 @@ fi
 %license LICENSE
 %doc README.md
 %config(noreplace) %{_sysconfdir}/resolvconf.conf
-%dir %{_libexecdir}/resolvconf
-%{_libexecdir}/resolvconf/*
+%dir %{_prefix}/lib/resolvconf
+%{_prefix}/lib/resolvconf/*
 %{_sbindir}/resolvconf.%{name}
 %{_mandir}/man5/resolvconf.conf.5*
 %{_mandir}/man8/resolvconf.%{name}.8*
