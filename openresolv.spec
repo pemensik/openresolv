@@ -21,12 +21,14 @@ Name:           openresolv
 Version:        3.12.0
 Release:        1
 Summary:        DNS management framework
-License:        BSD-2-Clause
+License:        BSD
 URL:            https://roy.marples.name/projects/openresolv
 Source:         https://roy.marples.name/downloads/openresolv/%{name}-%{version}.tar.xz
 Requires:       bash
 BuildArch:      noarch
 Provides:       resolvconf = %{version}-%{release}
+Requires(post): %{_sbindir}/update-alternatives
+Requires(postun): %{_sbindir}/update-alternatives
 
 %description
 /etc/resolv.conf is a file that holds the configuration for the local resolution of domain names.
@@ -39,7 +41,7 @@ openresolv can generate a combined resolv.conf or a configuration file for a loc
 
 %prep
 %autosetup
-sed -i -e 's/^#!\/bin\/sh$//' named.in pdnsd.in dnsmasq.in unbound.in libc.in pdns_recursor.in
+sed -i -e '1 s,^#!/bin/sh$,,' *.in
 
 %build
 # not GNU autoconf
@@ -50,6 +52,7 @@ sed -i -e 's/^#!\/bin\/sh$//' named.in pdnsd.in dnsmasq.in unbound.in libc.in pd
 %make_install
 mv %{buildroot}%{_sbindir}/resolvconf{,.%{name}}
 mv %{buildroot}%{_mandir}/man8/resolvconf{,.%{name}}.8
+touch %{buildroot}%{_sbindir}/resolvconf %{buildroot}%{_mandir}/man8/resolvconf.8%{?manext}
 
 %post
 %{_sbindir}/update-alternatives \
