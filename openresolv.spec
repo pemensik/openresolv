@@ -62,7 +62,6 @@ touch %{buildroot}%{_sbindir}/resolvconf %{buildroot}%{_mandir}/man8/resolvconf.
 %postun
 if [ $1 -eq 0 ] ; then
   %{_sbindir}/update-alternatives --remove resolvconf %{_sbindir}/resolvconf.%{name}
-  %{_sbindir}/update-alternatives --remove-slave resolvconf %{_sbindir}/resolvconf.%{name} resolvconf.8%{?manext}
 fi
 
 %files
